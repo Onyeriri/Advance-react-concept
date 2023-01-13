@@ -30,7 +30,7 @@ function App() {
 
   const logoutHandler = () => {
     setIsLoggedIn(false);
-    localStorage.setItem('logUserIn', '0');
+    localStorage.removeItem('logUserIn', '1');
   };
 
   return (
