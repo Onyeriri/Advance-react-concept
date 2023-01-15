@@ -4,6 +4,7 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 import AuthContext from '../store/auth-context';
+import Input from '../UI/Input/Input';
 
 const emailReducer = (state, action) => {
   if (action.type === 'EMAIL') {
@@ -99,7 +100,14 @@ const Login = (props) => {
           }`}
         >
           <label htmlFor="email">E-Mail</label>
-          <input
+          {/* <input
+            type="email"
+            id="email"
+            value={emailState.value}
+            onChange={emailChangeHandler}
+            onBlur={validateEmailHandler}
+          /> */}
+          <Input 
             type="email"
             id="email"
             value={emailState.value}
@@ -113,7 +121,14 @@ const Login = (props) => {
           }`}
         >
           <label htmlFor="password">Password</label>
-          <input
+          {/* <input
+            type="password"
+            id="password"
+            value={passwordState.value}
+            onChange={passwordChangeHandler}
+            onBlur={validatePasswordHandler}
+          /> */}
+          <Input 
             type="password"
             id="password"
             value={passwordState.value}
