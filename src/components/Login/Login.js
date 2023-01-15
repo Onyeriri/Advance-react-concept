@@ -17,11 +17,11 @@ const emailReducer = (state, action) => {
 
 const passwordReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
-    return { value: action.value, isValid: action.value.includes('@') };
+    return { value: action.value, isValid: action.value.trim().length > 6 };
   }
 
   if (action.type === 'INPUT_BLUR') {
-    return { value: state.value, isValid: state.value.includes('@')};
+    return { value: state.value, isValid: state.value.trim().length > 6};
   }
   return { value: '', isValid: false };
 }
@@ -33,40 +33,43 @@ const Login = (props) => {
   // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  const [emailState, dispatchEmail] = useReducer(emailReducer, { value: '', isValid: true });
-  const [passwordState, dispatchPass] = useReducer(passwordReducer, { value: '', isValid: true });
+  const [emailState, dispatchEmail] = useReducer(emailReducer, { value: '', isValid: null });
+  const [passwordState, dispatchPass] = useReducer(passwordReducer, { value: '', isValid: null});
 
-  // useEffect(() => {
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
+
+  useEffect(() => {
     
-  //   const timer = setTimeout(() => {
-  //     setFormIsValid(
-  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //     );
+    const timer = setTimeout(() => {
+      setFormIsValid(
+        emailIsValid && passwordIsValid
+      );
       
-  //     console.log('checking for validity');
-  //   }, 700);
+      console.log('checking for validity');
+    }, 700);
 
-  //   return () => {
-  //     clearTimeout(timer);
-  //   }
+    return () => {
+      clearTimeout(timer);
+    }
     
-  // }, [enteredEmail, enteredPassword])
+  }, [emailIsValid, passwordIsValid])
 
   const emailChangeHandler = (event) => {
     dispatchEmail({type: 'EMAIL', value: event.target.value});
 
-    setFormIsValid(
-      emailState.value.includes('@') && passwordState.value.trim().length > 6
-    );
+    // setFormIsValid(
+    //   emailState.isValid && passwordState.isValid
+    // );
 
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPass({type: 'USER_INPUT', value: event.target.value})
 
-    setFormIsValid(
-      emailState.value.includes('@') && passwordState.value.trim().length > 6
-    );
+    // setFormIsValid(
+    //   emailState.isValid && passwordState.isValid
+    // );
   };
 
   const validateEmailHandler = () => {
