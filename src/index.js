@@ -6,4 +6,4 @@ import App from './App';
 import { AuthContextProvider } from './components/store/auth-context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<AuthContextProvider>><App /></AuthContextProvider>);
+root.render(<AuthContextProvider><App /></AuthContextProvider>);
