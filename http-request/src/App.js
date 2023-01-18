@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -12,7 +12,7 @@ function App() {
   //   console.log(movies);
   // }, [movies]);
 
-  const fetchMoviesHandler = async () => {
+  const fetchMoviesHandler = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -20,25 +20,29 @@ function App() {
       if (!response.ok) {
         throw new Error('Something went wrong!!!');
       }
-     const data = await response.json();
+      const data = await response.json();
     
-    const convertedMovies = data.results.map((result) => {
-      return {
-        id: result.episode_id,
-        title: result.title,
-        releaseDate: result.release_date,
-        openingText: result.opening_crawl
-      };
-    });
-    setMovies(convertedMovies);
-    if (convertedMovies){
-      setIsLoading(false);
-    }
+      const convertedMovies = data.results.map((result) => {
+        return {
+          id: result.episode_id,
+          title: result.title,
+          releaseDate: result.release_date,
+          openingText: result.opening_crawl
+        };
+      });
+      setMovies(convertedMovies);
+      if (convertedMovies) {
+        setIsLoading(false);
+      }
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
     }
 
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchMoviesHandler()
+  }, [fetchMoviesHandler]);
 
   // const dummyMovies = [
   //   {
