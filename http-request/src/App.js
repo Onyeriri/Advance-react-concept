@@ -6,15 +6,21 @@ import './App.css';
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // useEffect(() => {
   //   console.log(movies);
   // }, [movies]);
 
   const fetchMoviesHandler = async () => {
-    setIsLoading(true);
-    const response = await fetch('https://swapi.dev/api/films');
-    const data = await response.json();
+    try {
+      setIsLoading(true);
+      setError(null);
+      const response = await fetch('https://swapi.dev/api/film');
+      if (!response.ok) {
+        throw new Error('Something went wrong!!!');
+      }
+     const data = await response.json();
     
     const convertedMovies = data.results.map((result) => {
       return {
@@ -27,6 +33,9 @@ function App() {
     setMovies(convertedMovies);
     if (convertedMovies){
       setIsLoading(false);
+    }
+    } catch (error) {
+      setError(error.message)
     }
 
   }
@@ -53,7 +62,8 @@ function App() {
       </section>
       <section>
         {movies.length === 0 && !isLoading ? <h1>No movies to display</h1> : <MoviesList movies={movies} />}
-        {isLoading && <p>Movies loading...</p>}
+        {isLoading && !error && <p>Movies loading...</p>}
+        {error && <p>{error}</p>}
       </section>
     </React.Fragment>
   );
