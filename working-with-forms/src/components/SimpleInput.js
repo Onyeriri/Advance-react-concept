@@ -6,6 +6,13 @@ const SimpleInput = (props) => {
   const [isFormEmpty, setIsFormEmpty] = useState(false);
 
   const userInput = useRef();
+
+  const handleUserInput = (e) => {
+    setEnteredValue(e.target.value);
+    
+    e.target.value.length < 6 ? setIsFormEmpty(true) : setIsFormEmpty(false);
+  }
+
   const handleSubmission = (e) => {
     e.preventDefault();
 
@@ -33,7 +40,7 @@ const SimpleInput = (props) => {
           className={isFormEmpty ? 'error-text' : ''}
           type='text' id='name'
           ref={userInput} value={enteredValue}
-          onChange={(e) => setEnteredValue(e.target.value)} 
+          onChange={handleUserInput} 
         />
         {isFormEmpty && <p>Fields cannot be empty</p>}
       </div>
