@@ -97,6 +97,7 @@ button:active {
   background-color: #fbe8d2;
 }
 
-.error-text {
+.form-control .error-text {
   color: #b40e0e;
+  border: 1px solid #b40e0e;
 }
