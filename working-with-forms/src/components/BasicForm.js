@@ -9,7 +9,10 @@ const BasicForm = (props) => {
     inputOnBlurHandler: firstNameOnBlurHandler,
     inputOnchangeHandler: firstNameOnChangeHandler,
     hasError: firstNameHasError,
+    inputValue,
   } = useInputValidation((value) => value.trim() !== "");
+
+  console.log(inputValue, firstNameIsValid);
 
   // last name input validation
   const {
