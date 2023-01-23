@@ -42,10 +42,12 @@ const useInput = (validateValue) => {
 
   const valueChangeHandler = (event) => {
     setEnteredValue(event.target.value);
+    console.log('Clicked!!!');
   }
 
   const onInputBlurHandler = (event) => {
-    setIsTouched(true)
+    setIsTouched(true);
+    console.log('Blurred!!!');
   }
 
   const resetInput = () => {
